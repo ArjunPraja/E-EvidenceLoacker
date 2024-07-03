@@ -1,0 +1,17 @@
+.bg-bac{
+    
+    
+        background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38); /* Set the background color with a 45-degree angle */
+        height: 100%;
+        width: 100%;
+    
+    
+}
+body {
+    height: 100%;
+}
+
+.logout{
+    margin-top: 50%;
+    margin-bottom:  2px;
+}

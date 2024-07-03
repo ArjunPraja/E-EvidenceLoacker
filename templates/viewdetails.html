@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>E-Evidence Locker</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/home.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);
+        }
+        
+        .container {
+            margin-top: 20px;
+        }
+        .header-container {
+            background-color: rgb(196, 194, 194);
+            border: 2px solid black;
+            border-radius: 15px;
+            padding: 10px;
+            text-align: center;
+        }
+        .table-container {
+            background-color: rgb(196, 194, 194);
+            border: 2px solid black;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .table-responsive {
+            height: 60vh;
+            overflow-y: auto;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-container">
+            <h2><b>View Records</b></h2>
+        </div>
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Barcode</th>
+                            <th scope="col">FIR Number</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">IPC Section</th>
+                            <th scope="col">Crime Place</th>
+                            <th scope="col">Crime Date</th>
+                            <th scope="col">Crime Witness</th>
+                            <th scope="col">Inspector</th>
+                            <th scope="col">Item Condition</th>
+                            <th scope="col">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for evidence in evidence_details %}
+                        <tr>
+                            <td>{{ evidence._id }}</td>
+                            <td>{{ evidence.fir_number }}</td>
+                            <td>{{ evidence.item_seized }}</td>
+                            <td>{{ evidence.ipc_section }}</td>
+                            <td>{{ evidence.crime_place }}</td>
+                            <td>{{ evidence.crime_date }}</td>
+                            <td>{{ evidence.witness }}</td>
+                            <td>{{ evidence.inspector }}</td>
+                            <td>{{ evidence.item_condition }}</td>
+                            <td>{{ evidence.storage_location }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="container" >
+            <div class="text-center">
+                <div class="row">
+                    <div class="col" style="padding:5px;margin-left: 65px; margin-bottom: 90px;  border: 2px solid black; background-color: rgb(201, 200, 200); border-radius: 10px;">
+                        <form action="/warehousetable">
+                            <button class="btn  " type="submit" name="back"><b>Back</b></button>
+                        </form>
+                    </div>
+                    <div class="col" style=" padding: 5px; margin-left: 65px; margin-right: 90px; margin-bottom: 90px; border: 2px solid black; background-color: rgb(201, 200, 200); border-radius: 10px;">
+                        <form action="/logout" method="POST">
+                            <button class="btn " type="submit" name="logout"><b>Logout</b></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
