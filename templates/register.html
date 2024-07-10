@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>E-Evidence Locker</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);
+            background:white;
         }
 
         .container {
@@ -18,7 +20,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: fit-content;
         }
 
         .header-container {
@@ -70,69 +72,73 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <div class="container" style="background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);">
+        <div class="container" style="background: rgb(255, 255, 255); padding-top: 80px; ">
             <div class="container" style="background-color:rgb(201, 200, 200); height: auto; border: 2px solid black; border-radius: 20px; margin-top: 15px; margin-bottom: 20px;">
                 <h2><b>Register Station</b></h2>
             </div>
-            <form action="{{ url_for('register_submit') }}" method="POST">
-                <div class="button-container" style="background-color: rgb(203, 203, 203);">
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Sub-District Name</h4>
-                        <input type="text" class="barcode-generator" name="sub_district_name" placeholder="">
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Registrant Name</h4>
-                        <input type="text" class="barcode-generator" name="registrant_name" placeholder="">
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Station Name</h4>
-                        <input type="text" class="barcode-generator" name="station_name" placeholder="">
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Station ID</h4>
-                        <input type="text" class="barcode-generator" name="station_id" placeholder="">
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Staff Name</h4>
-                        <input type="text" class="barcode-generator" name="staff_name" placeholder="">
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Contact No</h4>
-                        <input type="text" class="barcode-generator" name="contact_no" placeholder="">
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Station Location</h4>
-                        <input type="text" class="barcode-generator" name="station_location" placeholder="">
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Username</h4>
-                        <input type="text" class="barcode-generator" name="username" placeholder="">
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Password</h4>
-                        <input type="password" class="barcode-generator" name="password" placeholder="">
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Verify Password</h4>
-                        <input type="password" class="barcode-generator" name="verify_password" placeholder="">
-                    </div>
-                    <div class="container" style="height:fit-content;">
-                        <button class="submit-button" style="height: 50px; width: 270px; background-color:rgb(255, 255, 255) ; color: black; border: 2px solid black;"><b>Register</b></button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        
         <div class="container">
-            <div class="row">
-                <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; border: 2px solid black; width: 210px; background-color: white; border-radius: 10px;">
-                    <form action='/logout' method="post">
-                        <button class="btn" type="login" name="login" style=" width: 210px; text-align: center;"><b>Logout</b></button>
-                    </form>
-                </div>
+
+        
+        <div class=" button-container" style="background-color: rgb(255, 255, 255)">
+            <div class="barcode-container">
+                <h4 class="barcode-heading">Sub-District Name</h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+            <div class="barcode-container">
+                <h4 class="barcode-heading">Registrant Name</h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+            <div class="barcode-container">
+                <h4 class="barcode-heading">Station Name</h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+             
+            <div class="barcode-container">
+                <h4 class="barcode-heading">Station ID</h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+            <div class="barcode-container">
+                <h4 class="barcode-heading">Staff Name</h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+            <div class="barcode-container">
+                <h4 class="barcode-heading">Contact No</h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+            <div class="barcode-container">
+                <h4 class="barcode-heading">Station Location </h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+             
+            <div class="barcode-container">
+                <h4 class="barcode-heading">UserName</h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+            <div class="barcode-container">
+                <h4 class="barcode-heading">Password </h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+            <div class="barcode-container">
+                <h4 class="barcode-heading">Varify Password</h4>
+                <input type="text" class="barcode-generator" placeholder="">
+            </div>
+             
+            <!-- Repeat the above div for additional barcode fields -->
+            <div class="container" style="height:fit-content; margin-bottom: 20px;  ">
+
+                <button class="submit-button" style="height: 50px; min-width: 270px;  width: 750px; background-color:rgb(255, 255, 255) ; color: black; border: 2px solid black; border-radius: 40px;"><b>Register</b></button>
             </div>
         </div>
+        
     </div>
+   
+</div>
+
+</div>
 </body>
+
 </html>

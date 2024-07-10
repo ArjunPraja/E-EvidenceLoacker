@@ -5,7 +5,7 @@ import os
 
 # Create a Flask application
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'your_secret_key')  # Secret key for session management
+app.secret_key = os.getenv('SECRET_KEY', 'Prajapati Arjun')  # Secret key for session management
 
 # Database Connection
 client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -33,7 +33,7 @@ def login_submit():
             session['username'] = username
             session['role'] = 'admin'
             flash('Login successful!', 'success')
-            return redirect(url_for('register'))
+            return redirect(url_for('admin'))
 
         user = users_collection.find_one({'username': username})
         if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
@@ -44,6 +44,20 @@ def login_submit():
         else:
             flash('Invalid username or password', 'danger')
     return render_template('login.html')
+
+
+
+
+
+ 
+@app.route('/admin')
+def admin():
+    if 'username' not in session or session.get('role')!='admin':
+        flash('Access Denied','danger')
+        return redirect(url_for(login))
+    return render_template('admin.html')
+
+
 
 @app.route('/register')
 def register():
@@ -74,6 +88,7 @@ def register_submit():
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
             user_data = {
+                'user':session[username],
                 'sub_district_name': sub_district_name,
                 'registrant_name': registrant_name,
                 'station_name': station_name,
@@ -109,6 +124,11 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
 
+
+
+
+
+
 # Warehouse Table
 @app.route('/warehousetable')
 def warehousetable():
@@ -116,6 +136,8 @@ def warehousetable():
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
     return render_template('warehousetable.html')
+
+
 
 # Add Evidence Details
 @app.route('/adddetails', methods=['GET', 'POST'])
@@ -134,7 +156,9 @@ def add_details():
         witness = request.form['witness']
         storage_location = request.form['storage_location']
         ipc_section = request.form['ipc_section']
-
+        number_plate = request.form.get('number_plate', '')
+        
+        
         evidence_data = {
             'username': session['username'],
             'fir_number': fir_number,
@@ -145,7 +169,9 @@ def add_details():
             'item_condition': item_condition,
             'witness': witness,
             'storage_location': storage_location,
-            'ipc_section': ipc_section
+            'ipc_section': ipc_section,
+            'number_plate':number_plate
+
         }
 
         evidence_collection.insert_one(evidence_data)
@@ -159,7 +185,7 @@ def view_details():
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
 
-    evidence_details = evidence_collection.find()  # Fetch all evidence details
+    evidence_details = evidence_collection.find({'username':session['username']})  # Fetch all evidence details
     return render_template('viewdetails.html', evidence_details=evidence_details)
 
 # Check-in and Check-out for Warehouse Table
@@ -168,14 +194,28 @@ def checkin():
     if 'username' not in session:
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
-    return render_template('CheckIn.html')
+    
+    # Fetch check-in details for the logged-in user
+    checkin_details = Ceckin.find({'username': session['username']})
+    return render_template('CheckIn.html', checkin_details=checkin_details)
 
 @app.route('/checkout')
 def checkout():
     if 'username' not in session:
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
-    return render_template('CheckOut.html')
+    
+    # Fetch check-out details for the logged-in user
+    checkout_details = Checkout.find({'username': session['username']})
+    return render_template('CheckOut.html', checkout_details=checkout_details)
+
+
+
+
+
+
+
+
 
 # Storage Checker
 @app.route('/storagechecker')
@@ -183,14 +223,29 @@ def storage_checker():
     if 'username' not in session:
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
-    return render_template('storageChecker.html')
+    
+    return render_template('storageChecker.html' )
+
 
 @app.route('/setstoragechecker')
 def set_storage_checker():
     if 'username' not in session:
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
-    return render_template('setStorageChecker.html')
+    
+
+    user = Checkout.find({'username': session['username']})
+    return render_template('setStorageChecker.html',user=user)
+    
+
+
+
+
+
+
+
+
+
 
 # Global Search
 @app.route('/globalsearch')
@@ -214,6 +269,8 @@ def read_details():
 
 
 
+
+
 # Court Table
 @app.route('/courttable')
 def court_helper():
@@ -222,65 +279,90 @@ def court_helper():
         return redirect(url_for('login'))
     return render_template('CourtHelper.html')
 
-@app.route('/checkin_court', methods=['POST'])
+@app.route('/checkin_court', methods=['GET','POST'])
 def checkin_court():
-    if 'username' not in session:
-        flash('Please log in first.', 'danger')
-        return redirect(url_for('login'))
-    
     if request.method == 'POST':
+        
         barcode_number = request.form['barcode_number']
         fir_number = request.form['fir_number']
         item_name = request.form['item_name']
         collected_by = request.form['collected_by']
-        checkout_date = request.form['checkout_date']
-        checkout_time = request.form['checkout_time']
+        checkin_date = request.form['checkin_date']
+        checkin_time = request.form['checkin_time']
+        remarks=request.form['remarks']
+         
         
         checkin_data = {
+            'username': session['username'],
             'barcode_number': barcode_number,
             'fir_number': fir_number,
             'item_name': item_name,
             'collected_by': collected_by,
-            'checkout_date': checkout_date,
-            'checkout_time': checkout_time
+            'checkin_date': checkin_date,
+            'checkin_time': checkin_time,
+            'remarks':remarks,
+            
         }
         
-        Ceckin.insert_one(checkin_data)  # Insert data into Checkin collection in MongoDB
+        Ceckin.insert_one(checkin_data)   
         
+         
         flash('Checked in successfully!', 'success')
-        return redirect(url_for('court_helper'))
+        return redirect(url_for('checkin_court'))
 
-    return redirect(url_for('court_helper'))
+    return render_template('Check_In_from_Court.html')
 
-@app.route('/checkout_court', methods=['POST'])
+@app.route('/checkout_court', methods=['GET','POST'])
 def checkout_court():
     if 'username' not in session:
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
     
     if request.method == 'POST':
+        
         barcode_number = request.form['barcode_number']
         fir_number = request.form['fir_number']
         item_name = request.form['item_name']
         collected_by = request.form['collected_by']
         checkout_date = request.form['checkout_date']
         checkout_time = request.form['checkout_time']
+        remarks=request.form['remarks']
         
         checkout_data = {
+            'username': session['username'],
             'barcode_number': barcode_number,
             'fir_number': fir_number,
             'item_name': item_name,
             'collected_by': collected_by,
             'checkout_date': checkout_date,
-            'checkout_time': checkout_time
+            'checkout_time': checkout_time,
+            'remarks':remarks
         }
         
         Checkout.insert_one(checkout_data)  # Insert data into Checkout collection in MongoDB
         
         flash('Checked out successfully!', 'success')
-        return redirect(url_for('court_helper'))
+        return redirect(url_for('checkout_court'))
 
-    return redirect(url_for('court_helper'))
+    return render_template('Check_out_from_Court.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -311,22 +393,24 @@ def checkout_fsl():
         return redirect(url_for('login'))
     
     if request.method == 'POST':
+         
         barcode_number = request.form['barcode_number']
         fir_number = request.form['fir_number']
         item_name = request.form['item_name']
         collected_by = request.form['collected_by']
         checkout_date = request.form['checkout_date']
         checkout_time = request.form['checkout_time']
+        remarks=request.form['remarks']
         
         checkout_data = {
+            'username': session['username'],
             'barcode_number': barcode_number,
             'fir_number': fir_number,
             'item_name': item_name,
             'collected_by': collected_by,
             'checkout_date': checkout_date,
             'checkout_time': checkout_time,
-            'Previous_Storage_Location':"Fsl purpose ",
-            'New Storage Location':'Warehouse'
+            
         }
         
         Checkout.insert_one(checkout_data)  # Insert data into Checkout collection in MongoDB
@@ -352,16 +436,20 @@ def checkin_fsl():
         collected_by = request.form['collected_by']
         checkin_date = request.form['checkin_date']
         checkin_time = request.form['checkin_time']
+        remarks=request.form['remarks']
+         
         
         checkin_data = {
+            'username': session['username'],
             'barcode_number': barcode_number,
             'fir_number': fir_number,
             'item_name': item_name,
             'collected_by': collected_by,
             'checkin_date': checkin_date,
             'checkin_time': checkin_time,
-            'Previous_Storage_Location':"Warehouse ",
-            'New Storage Location':'Fsl purpose'
+            'remarks':remarks,
+             
+            
         }
         
         Ceckin.insert_one(checkin_data)  # Insert data into Checkin collection in MongoDB

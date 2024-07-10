@@ -103,15 +103,15 @@
             </div>
             <div class="barcode-container">
                 <h4 class="barcode-heading">CheckOut Date:</h4>
-                <input type="text" class="barcode-generator" name="checkout_date" placeholder="">
+                <input type="date" class="barcode-generator" name="checkout_date" placeholder="">
             </div>
             <div class="barcode-container">
                 <h4 class="barcode-heading">CheckOut Time:</h4>
-                <input type="text" class="barcode-generator" name="checkout_time" placeholder="">
+                <input type="time" class="barcode-generator" name="checkout_time" placeholder="">
             </div>
             <div class="barcode-container">
-                <h4 class="barcode-heading"> </h4>
-                <HABIBI class="barcode-generator" style="color: rgb(201, 200, 200); background-color: rgb(201, 200, 200); border: 2px solid rgb(201, 200, 200) ;" placeholder="">
+                <h4 class="barcode-heading">Remarks:</h4>
+                <input type="text" class="barcode-generator" name="remarks" placeholder="" required>
             </div>
             <div class="barcode-container">
                 <h4 class="barcode-heading"> </h4>
@@ -133,12 +133,12 @@
         <div class="text-center">
             <div class="row">
                 <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; width: 210px; border: 2px solid black; background-color:white; border-radius: 10px;">
-                    <form action="/FSLHelper">
+                    <form action="/fsltable">
                         <button class="btn  " type="login" name="login" style="  width: 210px; text-align: center;"><b>Back</b></button>
                     </form>
                 </div>
                 <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; border: 2px solid black; width: 210px;background-color: white; border-radius: 10px;">
-                    <form action="/login">
+                    <form action="/logout" method="post">
                         <button class="btn " type="login" name="login" style=" width: 210px; text-align: center;"><b>Logout</b></button>
                     </form>
                 </div>

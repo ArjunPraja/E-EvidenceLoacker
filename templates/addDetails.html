@@ -71,6 +71,17 @@
             cursor: pointer;
         }
     </style>
+    <script>
+        function toggleNumberPlateInput() {
+            var checkbox = document.getElementById("vehicleCheckbox");
+            var numberPlateContainer = document.getElementById("numberPlateContainer");
+            if (checkbox.checked) {
+                numberPlateContainer.style.display = "flex";
+            } else {
+                numberPlateContainer.style.display = "none";
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -84,15 +95,15 @@
             <form method="POST" action="/adddetails" class="button-container" style="background-color: rgb(203, 203, 203);">
                 <div class="barcode-container">
                     <h4 class="barcode-heading">FIR Number:</h4>
-                    <input type="text" name="fir_number" class="barcode-generator" placeholder="">
+                    <input type="text" name="fir_number" class="barcode-generator" placeholder="" required>
                 </div>
                 <div class="barcode-container">
                     <h4 class="barcode-heading">INSPECTOR:</h4>
-                    <input type="text" name="inspector" class="barcode-generator" placeholder="">
+                    <input type="text" name="inspector" class="barcode-generator" placeholder="" required>
                 </div>
                 <div class="barcode-container">
                     <h4 class="barcode-heading">Crime Date:</h4>
-                    <input type="text" name="crime_date" class="barcode-generator" placeholder="">
+                    <input type="date" name="crime_date" class="barcode-generator" placeholder="" required>
                 </div>
                 <div class="barcode-container">
                     <h4 class="barcode-heading">Item Seized:</h4>
@@ -100,30 +111,37 @@
                 </div>
                 <div class="barcode-container">
                     <h4 class="barcode-heading">Crime Place:</h4>
-                    <input type="text" name="crime_place" class="barcode-generator" placeholder="">
+                    <input type="text" name="crime_place" class="barcode-generator" placeholder="" required>
                 </div>
                 <div class="barcode-container">
                     <h4 class="barcode-heading">Item Condition:</h4>
-                    <input type="text" name="item_condition" class="barcode-generator" placeholder="">
+                    <input type="text" name="item_condition" class="barcode-generator" placeholder="" required>
                 </div>
                 <div class="barcode-container">
                     <h4 class="barcode-heading">Witness:</h4>
-                    <input type="text" name="witness" class="barcode-generator" placeholder="">
+                    <input type="text" name="witness" class="barcode-generator" placeholder="" required>
                 </div>
                 <div class="barcode-container">
                     <h4 class="barcode-heading">Storage Location:</h4>
-                    <input type="text" name="storage_location" class="barcode-generator" placeholder="">
+                    <input type="text" name="storage_location" class="barcode-generator" placeholder="" required>
                 </div>
                 <div class="barcode-container">
                     <h4 class="barcode-heading">IPC Section:</h4>
-                    <input type="text" name="ipc_section" class="barcode-generator" placeholder="">
+                    <input type="text" name="ipc_section" class="barcode-generator" placeholder="" required>
                 </div>
                 <div class="barcode-container">
-                    <h4 class="barcode-heading">IPC Section:</h4>
-                    <input type="text" name="ipc_section" class="barcode-generator" placeholder="">
+                    <h4 class="barcode-heading">Vehicle:</h4>
+                    <input type="checkbox" id="vehicleCheckbox" class="barcode-generator"   onclick="toggleNumberPlateInput()">
                 </div>
-                 
-                 
+                <div class="barcode-container" id="numberPlateContainer" style="display: none;">
+                    <h4 class="barcode-heading">Number Plate:</h4>
+                    <input type="text" name="number_plate" class="barcode-generator" placeholder="">
+                </div>
+                <div class="barcode-container" id="numberPlateContainer" style="display: none;">
+                    <h4 class="barcode-heading"> </h4>
+                    <input  class="barcode-generator" style="color: rgb(201, 200, 200); background-color: rgb(201, 200, 200); border: 2px solid rgb(201, 200, 200) ;" placeholder="">
+                </div>
+              
                 <div class="container" style="height:fit-content;">
                     <button type="submit" class="submit-button"
                         style="height: 50px; width: 270px; background-color:rgb(255, 255, 255) ; color: black; border: 2px solid black;">
