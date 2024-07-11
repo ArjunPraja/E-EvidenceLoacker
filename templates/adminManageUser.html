@@ -1,0 +1,38 @@
+{% extends "admin.html" %}
+
+{% block content %}
+
+<div class="container" style="padding: 30px;">
+    <div class="header-container" style="border: 2px solid rgb(237, 233, 233); border-radius: 15px; padding: 10px; text-align: center;">
+        <h2><b>Manage Your Station</b></h2>
+    </div>
+
+    <table class="police-stations-table" style="margin-top: 20px; width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Police Station</th>
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Location</th>
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Contact Number</th>
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Username</th>
+                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users_data %}
+            <tr id="{{ user._id }}">
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">{{ user.station_name }}</td>
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">{{ user.station_location }}</td>
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">{{ user.contact_no }}</td>
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">{{ user.username }}</td>
+                <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">
+                    <form action="{{ url_for('edit', user_id=user._id) }}" style="display: inline;">
+                        <button type="submit" style="border: none; background: none; color: blue; text-decoration: underline; cursor: pointer;">Edit</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "admin.html" %}
+
+{% block content %}
+<body style="margin: 0; padding: 0; overflow-x: hidden; background:white;">
+    <div class="container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: fit-content;">
+        <div class="container" style="background: rgb(255, 255, 255); padding-top: 80px;">
+            <div class="container" style="background-color:rgb(201, 200, 200); height: auto; border: 2px solid black; border-radius: 20px; margin-top: 15px; margin-bottom: 20px; text-align: center;">
+                <h2><b>Edit User</b></h2>
+            </div>
+            <form action="{{ url_for('edit', user_id=user._id) }}" method="post">
+                <div class="container">
+                    <div class="button-container" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; background-color: rgb(255, 255, 255)">
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Sub-District Name</h4>
+                            <input type="text" name="sub_district_name" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" value="{{ user.sub_district_name }}">
+                        </div>
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Registrant Name</h4>
+                            <input type="text" name="registrant_name" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" value="{{ user.registrant_name }}">
+                        </div>
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Station Name</h4>
+                            <input type="text" name="station_name" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" value="{{ user.station_name }}">
+                        </div>
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Station ID</h4>
+                            <input type="text" name="station_id" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" value="{{ user.station_id }}">
+                        </div>
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Staff Name</h4>
+                            <input type="text" name="staff_name" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" value="{{ user.staff_name }}">
+                        </div>
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Contact No</h4>
+                            <input type="text" name="contact_no" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" value="{{ user.contact_no }}">
+                        </div>
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Station Location</h4>
+                            <input type="text" name="station_location" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" value="{{ user.station_location }}">
+                        </div>
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Username</h4>
+                            <input type="text" name="username" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" value="{{ user.username }}">
+                        </div>
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Password</h4>
+                            <input type="password" name="password" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="">
+                        </div>
+                        <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                            <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Verify Password</h4>
+                            <input type="password" name="verify_password" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="">
+                        </div>
+                    </div>
+                    <div class="container" style="height: fit-content; margin-bottom: 20px; text-align: center; margin-top: 30px;">
+                        <button type="submit" class="submit-button" style="height: 50px; min-width: 270px; width: 750px; background-color: rgb(255, 255, 255); color: black; border: 2px solid black; border-radius: 40px;"><b>Update</b></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock %}
