@@ -1,9 +1,28 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+from flask_jwt_extended import jwt_manager, create_access_token, jwt_required, get_jwt_identity
 import pymongo
 import bcrypt
+from PIL import Image, ImageDraw, ImageFont
+import qrcode
+import uuid
+from io import BytesIO
+import base64
+from PIL import Image, ImageDraw, ImageFont
+
 import os
 from bson import ObjectId
+import uuid
+import qrcode
+from io import BytesIO
+from PIL import Image
+import base64
 # Create a Flask application
+
+
+
+
+
+
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'Prajapati Arjun')  # Secret key for session management
 
@@ -27,6 +46,22 @@ def login_submit():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+
+         # Validation: Check if all required fields are provided
+        if not username or not password:
+            flash('Username and password are required', 'danger')
+            return redirect(url_for('login_submit'))
+        
+        # Validation: Check if the password meets the minimum length requirement
+        if len(username) < 8:
+            flash('Password must be at least 8 characters long', 'danger')
+            return redirect(url_for('login_submit'))
+        
+        # Validation: Check if the password meets the minimum length requirement
+        if len(password) < 8:
+            flash('Password must be at least 8 characters long', 'danger')
+            return redirect(url_for('login_submit'))
+
         
         admin = admins_collection.find_one({'username': username})
         if admin and bcrypt.checkpw(password.encode('utf-8'), admin['password']):
@@ -51,7 +86,10 @@ def logout():
     # Clear the session
     session.clear()
     # Redirect the user to the login page or homepage after logging out
+    flash("Logout SuccessFully","success")
     return redirect(url_for('login')) 
+
+
 
 
 
@@ -112,6 +150,23 @@ def register():
         password = request.form['password']
         verify_password = request.form['verify_password']
 
+        # Check if station_id already exists in the database
+        existing_station = users_collection.find_one({'station_id': station_id})
+        if existing_station:
+            flash('Station ID already exists. Please use a different Station ID.', 'danger')
+            return redirect(url_for('register'))
+
+        # Check if username already exists in the database
+        existing_user = users_collection.find_one({'username': username})
+        if existing_user:
+            flash('Username already taken. Please choose a different username.', 'danger')
+            return redirect(url_for('register'))
+
+        # Check if passwords match
+        if password != verify_password:
+            flash('Passwords do not match', 'danger')
+            return redirect(url_for('register'))
+
         if password == verify_password:
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
@@ -152,9 +207,14 @@ def manage_user():
 
 
 
-
 @app.route('/edit/<user_id>', methods=['GET', 'POST'])
 def edit(user_id):
+    user = users_collection.find_one({'_id': ObjectId(user_id)})
+    
+    if not user:
+        flash('User not found', 'danger')
+        return redirect(url_for('manage_user'))
+
     if request.method == 'POST':
         sub_district_name = request.form['sub_district_name']
         registrant_name = request.form['registrant_name']
@@ -166,36 +226,64 @@ def edit(user_id):
         username = request.form['username']
         password = request.form['password']
         verify_password = request.form['verify_password']
-        
-        if password == verify_password:
-            
-            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            users_collection.update_one(
-                {'_id': ObjectId(user_id)},
-                {
-                    "$set": {
-                        'sub_district_name': sub_district_name,
-                        'registrant_name': registrant_name,
-                        'station_name': station_name,
-                        'station_id': station_id,
-                        'staff_name': staff_name,
-                        'contact_no': contact_no,
-                        'station_location': station_location,
-                        'username': username,
-                        'password': hashed_password
-                    }
+
+        # Validation: Check if all required fields are provided
+        if not username or not password:
+            flash('Username and password are required', 'danger')
+            return render_template('edit.html', user=user)
+
+        # Validation: Check if the username meets the minimum length requirement
+        if len(username) < 8:
+            flash('Username must be at least 8 characters long', 'danger')
+            return render_template('edit.html', user=user)
+
+        # Validation: Check if the password meets the minimum length requirement
+        if len(password) < 8:
+            flash('Password must be at least 8 characters long', 'danger')
+            return render_template('edit.html', user=user)
+
+        # Validation: Ensure the station_id is unique (excluding the current user's station_id)
+        existing_station = users_collection.find_one({'station_id': station_id, '_id': {'$ne': ObjectId(user_id)}})
+        if existing_station:
+            flash('Station ID already exists. Please use a different Station ID.', 'danger')
+            return render_template('edit.html', user=user)
+
+        # Validation: Ensure the username is unique (excluding the current user's username)
+        existing_user = users_collection.find_one({'username': username, '_id': {'$ne': ObjectId(user_id)}})
+        if existing_user:
+            flash('Username already taken. Please choose a different username.', 'danger')
+            return render_template('edit.html', user=user)
+
+        # Validation: Check if the passwords match
+        if password != verify_password:
+            flash("Passwords do not match", 'danger')
+            return render_template('edit.html', user=user)
+
+        # Hash the password if it is provided and valid
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+        # Update the user details in the database
+        users_collection.update_one(
+            {'_id': ObjectId(user_id)},
+            {
+                "$set": {
+                    'sub_district_name': sub_district_name,
+                    'registrant_name': registrant_name,
+                    'station_name': station_name,
+                    'station_id': station_id,
+                    'staff_name': staff_name,
+                    'contact_no': contact_no,
+                    'station_location': station_location,
+                    'username': username,
+                    'password': hashed_password
                 }
-            )
-            return redirect(url_for('manage_user'))
-        else:
-            return "Passwords do not match!"
-    
-    user = users_collection.find_one({'_id': ObjectId(user_id)})
+            }
+        )
+        flash("User edited successfully", 'success')
+        return redirect(url_for('manage_user'))
+
+    # GET request: Render the form with the current user details
     return render_template('edit.html', user=user)
-
-
-
-
 
 
 
@@ -233,6 +321,8 @@ def warehousetable():
     return render_template('warehousetable.html')
 
 @app.route('/adddetails', methods=['GET', 'POST'])
+
+@app.route('/adddetails', methods=['GET', 'POST'])
 def add_details():
     if 'username' not in session:
         flash('Please log in first.', 'danger')
@@ -250,6 +340,62 @@ def add_details():
         ipc_section = request.form['ipc_section']
         number_plate = request.form.get('number_plate', '')
 
+        # Generate a Unique ID
+        unique_id = str(uuid.uuid4())
+
+        # Prepare data to encode in the QR code
+        qr_data = f"""
+        FIR Number: {fir_number}
+        Inspector: {inspector}
+        Crime Date: {crime_date}
+        Item Seized: {item_seized}
+        Crime Place: {crime_place}
+        Item Condition: {item_condition}
+        Witness: {witness}
+        Storage Location: {storage_location}
+        IPC Section: {ipc_section}
+        Number Plate: {number_plate}
+        Unique ID: {unique_id}
+        """
+
+        # Generate QR code
+        qr = qrcode.QRCode(version=1, box_size=10, border=5)
+        qr.add_data(qr_data)
+        qr.make(fit=True)
+        
+        img = qr.make_image(fill='black', back_color='white').convert('RGB')
+
+        # Create a drawing context
+        draw = ImageDraw.Draw(img)
+
+        # Define the font and size for the UUID text
+        try:
+            font = ImageFont.truetype("arial.ttf", 24)  # Adjust font and size as needed
+        except IOError:
+            font = ImageFont.load_default()
+
+        # Prepare the UUID text
+        text = f"Unique ID: {unique_id}"
+        
+        # Calculate text size and position
+        text_bbox = draw.textbbox((0, 0), text, font=font)
+        text_width = text_bbox[2] - text_bbox[0]
+        text_height = text_bbox[3] - text_bbox[1]
+        
+        # Calculate text position
+        image_width, image_height = img.size
+        text_x = (image_width - text_width) // 2
+        text_y = image_height - text_height - 10  # 10 pixels from the bottom
+
+        # Add the text to the image
+        draw.text((text_x, text_y), text, font=font, fill='black')
+
+        # Save QR code as an image in memory
+        buffered = BytesIO()
+        img.save(buffered, format="PNG")
+        img_str = base64.b64encode(buffered.getvalue()).decode()
+
+        # Save evidence data along with unique ID and QR code image (base64 encoded)
         evidence_data = {
             'username': session['username'],
             'fir_number': fir_number,
@@ -261,11 +407,17 @@ def add_details():
             'witness': witness,
             'storage_location': storage_location,
             'ipc_section': ipc_section,
-            'number_plate': number_plate
+            'number_plate': number_plate,
+            'unique_id': unique_id,
+            'qr_code': img_str  # Storing the QR code image as base64
         }
 
         evidence_collection.insert_one(evidence_data)
         flash('Evidence details added successfully!', 'success')
+
+        # Render the template and pass the QR code image and unique ID to be displayed
+        return render_template('adddetails.html', qr_code=img_str, unique_id=unique_id)
+
     return render_template('adddetails.html')
 
 @app.route('/viewdetails')
@@ -296,6 +448,9 @@ def checkout():
     checkout_details = checkout_collection.find({'username': session['username']})
     return render_template('CheckOut.html', checkout_details=checkout_details)
 
+
+
+
 # Storage Checker Routes
 @app.route('/storagechecker')
 def storage_checker():
@@ -313,20 +468,72 @@ def set_storage_checker():
     user = checkout_collection.find({'username': session['username']})
     return render_template('setStorageChecker.html', user=user)
 
-# Global Search Routes
-@app.route('/globalsearch')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Global Search
+@app.route('/globalsearch', methods=['GET', 'POST'])
 def global_search():
     if 'username' not in session:
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        search_query = request.form.get('search')
+        query = {
+            "$or": [
+                {"number_plate": {"$regex": search_query, "$options": "i"}},
+                {"item_seized": {"$regex": search_query, "$options": "i"}},
+                {"crime_date": {"$regex": search_query, "$options": "i"}},
+                {"storage_location": {"$regex": search_query, "$options": "i"}}
+            ]
+        }
+        results = evidence_collection.find(query)
+        return render_template('GlobalSearch.html', result=results)
+    
     return render_template('GlobalSearch.html')
 
-@app.route('/readdetails')
-def read_details():
+@app.route('/readDetails/<evidence_id>')
+def read_details1(evidence_id):
+    # Find the evidence by its ID
     if 'username' not in session:
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
-    return render_template('GlobalReadDetails.html')
+    else:
+        evidence = evidence_collection.find_one({"_id": ObjectId(evidence_id)})
+        if evidence:
+           return render_template('GlobalReadDetails.html', evidence=evidence)
+        else:
+           return 'Evidence not found', 404
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Court Table Routes
 @app.route('/courttable')
@@ -400,6 +607,26 @@ def checkout_court():
 
     return render_template('Check_out_from_Court.html')
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # FSL Table Routes
 @app.route('/fsltable')
 def fsl_helper():
@@ -439,6 +666,75 @@ def checkout_fsl():
         return redirect(url_for('checkout_fsl'))
 
     return render_template('Check_out_from_FSL.html')
+
+
+@app.route('/searchinfsl', methods=['POST'])
+def searchinfsl():
+    qr_number = request.form.get('barcode_number')
+    evidence = None
+    
+    if qr_number:
+        evidence = evidence_collection.find_one({'unique_id': qr_number})
+        if evidence:
+            flash('Data Collected Successfully', 'success')
+        else:
+            flash('No data found for the given barcode number', 'danger')
+    else:
+        flash('Please enter a barcode number', 'warning')
+    
+    return render_template('Check_In_from_FSL.html', evidence=evidence)
+
+@app.route('/searchoutfsl', methods=['POST'])
+def searchoutfsl():
+    qr_number = request.form.get('barcode_number')
+    evidence = None
+    
+    if qr_number:
+        evidence = evidence_collection.find_one({'unique_id': qr_number})
+        if evidence:
+            flash('Data Collected Successfully', 'success')
+        else:
+            flash('No data found for the given barcode number', 'danger')
+    else:
+        flash('Please enter a barcode number', 'warning')
+    
+    return render_template('Check_out_from_FSL.html', evidence=evidence)
+
+@app.route('/searchincourt', methods=['POST'])
+def searchincourt():
+    qr_number = request.form.get('barcode_number')
+    evidence = None
+    
+    if qr_number:
+        evidence = evidence_collection.find_one({'unique_id': qr_number})
+        if evidence:
+            flash('Data Collected Successfully', 'success')
+        else:
+            flash('No data found for the given barcode number', 'danger')
+    else:
+        flash('Please enter a barcode number', 'warning')
+    
+    return render_template('Check_In_from_Court.html', evidence=evidence)
+
+@app.route('/searchoutcourt', methods=['POST'])
+def searchoutcourt():
+    qr_number = request.form.get('barcode_number')
+    evidence = None
+    
+    if qr_number:
+        evidence = evidence_collection.find_one({'unique_id': qr_number})
+        if evidence:
+            flash('Data Collected Successfully', 'success')
+        else:
+            flash('No data found for the given barcode number', 'danger')
+    else:
+        flash('Please enter a barcode number', 'warning')
+    
+    return render_template('Check_In_from_Court.html', evidence=evidence)
+
+
+
+
 
 @app.route('/checkin_fsl', methods=['GET', 'POST'])
 def checkin_fsl():
