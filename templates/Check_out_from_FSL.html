@@ -1,342 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>E-Evidence Locker</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .header-container {
-            background-color: red;
-            margin: 15px;
-            padding: 10px;
-            border-radius: 10px;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .barcode-container {
-            display: flex;
-            align-items: center;
-            margin: 5px;
-        }
-
-        .barcode-heading {
-            margin-right: 10px;
-            margin-left: 60px;
-            padding-left: 10px;
-            width: 210px;
-        }
-
-        .barcode-generator {
-            padding: 10px;
-            background-color: white;
-            color: #000000;
-            border: 2px solid black;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            width: 210px;
-        }
-
-        .submit-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="container" style="background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38); ">
-            <div class="container" style="background-color:rgb(201, 200, 200); height: auto; border: 2px solid black; border-radius: 20px; margin-top: 15px; margin-bottom: 20px;">
-                <h2><b>Check-Out From FSL</b></h2>
-            </div>
-        
-        <div class="container">
-
-        <form action="{{ url_for('checkout_fsl') }}" method="post">
-        <div class=" button-container" style="background-color: rgb(203, 203, 203); margin-top: 20px; border: 2px solid black; padding-top: 35px; border-radius: 15px;">
-            <div class="barcode-container">
-                <h4 class="barcode-heading">Barcode Number:</h4>
-                <input type="text" class="barcode-generator" name="barcode_number" placeholder="">
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">FIR Number:</h4>
-                <input type="text" class="barcode-generator" name="fir_number" placeholder="">
-            </div>
-            
-            <div class="barcode-container">
-                <h4 class="barcode-heading">Item Name:</h4>
-                <input type="text" class="barcode-generator" name="item_name" placeholder="">
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">Collected By:</h4>
-                <input type="text" class="barcode-generator" name="collected_by" placeholder="">
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">CheckOut Date:</h4>
-                <input type="date" class="barcode-generator" name="checkout_date" placeholder="">
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">CheckOut Time:</h4>
-                <input type="time" class="barcode-generator" name="checkout_time" placeholder="">
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">Remarks:</h4>
-                <input type="text" class="barcode-generator" name="remarks" placeholder="" required>
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading"> </h4>
-                <HABIBI  class="barcode-generator" style="color: rgb(201, 200, 200); background-color: rgb(201, 200, 200); border: 2px solid rgb(201, 200, 200) ;" placeholder="">
-            </div>
-            
-          
-             
-            <!-- Repeat the above div for additional barcode fields -->
-            <!-- <div class="container" style="height:fit-content; margin-bottom: 50px;">
-
-                <button class="submit-button" type="submit" style="height: 50px; width: 270px; background-color:rgb(255, 255, 255) ; color: black; border: 2px solid black;"><b>CheckOut</b></button>
-            </div>
-        </div>
-        </form>
-        
-    </div>
-    <div class="container" style="margin-top: 30px; padding: 0px;" >
-        <div class="text-center">
-            <div class="row">
-                <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; width: 210px; border: 2px solid black; background-color:white; border-radius: 10px;">
-                    <form action="/fsltable">
-                        <button class="btn  " type="login" name="login" style="  width: 210px; text-align: center;"><b>Back</b></button>
-                    </form>
-                </div>
-                <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; border: 2px solid black; width: 210px;background-color: white; border-radius: 10px;">
-                    <form action="/logout">
-                        <button class="btn " type="login" name="login" style=" width: 210px; text-align: center;"><b>Logout</b></button>
-                    </form>
-                </div>
-                 
-            </div>
-            
-        </div>
-   
-</div>
-
-</div>
-</body>
-
-</html> --> 
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>E-Evidence Locker</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .header-container {
-            background-color: red;
-            margin: 15px;
-            padding: 10px;
-            border-radius: 10px;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .barcode-container {
-            display: flex;
-            align-items: center;
-            margin: 5px;
-        }
-
-        .barcode-heading {
-            margin-right: 10px;
-            margin-left: 60px;
-            padding-left: 10px;
-            width: 210px;
-        }
-
-        .barcode-generator {
-            padding: 10px;
-            background-color: white;
-            color: #000000;
-            border: 2px solid black;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            width: 210px;
-        }
-
-        .submit-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="container" style="background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38); ">
-            <div class="container" style="background-color:rgb(201, 200, 200); height: auto; border: 2px solid black; border-radius: 20px; margin-top: 15px; margin-bottom: 20px;">
-                <h2><b>Check-In From FSL</b></h2>
-            </div>
-        
-        <div class="container" style="margin-top: 35px ;">
-
-        <form action="{{ url_for('checkin_fsl') }}" method="post">
-        <div class=" button-container" style="background-color: rgb(203, 203, 203);  border: 2px  ; border-radius: 10px;  margin-top: 20px; border: 2px solid black; padding-top: 35px; border-radius: 15px;">
-            <div class="barcode-container">
-                <h4 class="barcode-heading">Barcode Number:</h4>
-                <input type="text" class="barcode-generator" name="barcode_number" placeholder="" required>
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">FIR Number:</h4>
-                <input type="text" class="barcode-generator" name="fir_number" placeholder="" required>
-            </div>
-            
-            <div class="barcode-container">
-                <h4 class="barcode-heading">Item Name:</h4>
-                <input type="text" class="barcode-generator" name="item_name" placeholder="" required>
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">Collected By:</h4>
-                <input type="text" class="barcode-generator" name="collected_by" placeholder="" required>
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">CheckOut Date:</h4>
-                <input type="date" class="barcode-generator" name="checkin_date" placeholder="" required>
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">CheckOut Time:</h4>
-                <input type="time" class="barcode-generator" name="checkin_time" placeholder="" required>
-            </div>
-            <div class="barcode-container">
-                <h4 class="barcode-heading">Remarks:</h4>
-                <input type="text" class="barcode-generator" name="remarks" placeholder="">
-            </div>
-             
-            <div class="barcode-container">
-                <h4 class="barcode-heading"> </h4>
-                <input  class="barcode-generator" style="color: rgb(201, 200, 200); background-color: rgb(201, 200, 200); border: 2px solid rgb(201, 200, 200) ;" placeholder="">
-            </div>
-            
-            < Repeat the above div for additional barcode fields -->
-            <!-- <div class="container" style="height:fit-content; margin-bottom: 50px; margin-top: 50px;">
-
-                <button class="submit-button" type="submit" style="height: 50px; width: 270px; background-color:rgb(255, 255, 255) ; color: black; border: 2px solid black; "><b>Check-In</b></button>
-            </div>
-        </div>
-        </form>
-        
-    </div>
-    <div class="container" >
-        <div class="text-center">
-            <div class="row">
-                <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; width: 210px; border: 2px solid black; background-color:white; border-radius: 10px;">
-                    <form action="/fsltable">
-                        <button class="btn  " type="login" name="login" style="  width: 210px; text-align: center;"><b>Back</b></button>
-                    </form>
-                </div>
-                <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; border: 2px solid black; width: 210px;background-color: white; border-radius: 10px;">
-                    <form action="/logout">
-                        <button class="btn " type="login" name="login" style=" width: 210px; text-align: center;"><b>Logout</b></button>
-                    </form>
-                </div>
-                 
-            </div>
-            
-        </div>
-   
-</div>
-
-</div>
-</body>
-
-</html> -->
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-
-
--->
-
-
- 
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -427,11 +88,33 @@
 </head>
 
 <body>
+ <!-- Flash messages -->
+ {% with messages = get_flashed_messages(with_categories=true) %}
+ {% if messages %}
+ <div class="flash-message d-flex justify-content-center align-items-center">
+     {% for category, message in messages %}
+     <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px;">
+         {{ message }}
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+     </div>
+     {% endfor %}
+ </div>
+ <script>
+     setTimeout(function() {
+         let alerts = document.querySelectorAll('.alert');
+         alerts.forEach(alert => {
+             alert.classList.remove('show');
+             alert.classList.add('fade');
+         });
+     }, 2000); // Hide alert after 2 seconds
+ </script>
+ {% endif %}
+ {% endwith %}
     <div class="container">
 
         <div class="container" style="background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);">
             <div class="container" style="background-color:rgb(201, 200, 200); height: auto; border: 2px solid black; border-radius: 20px; margin-top: 15px; margin-bottom: 20px;">
-                <h2><b>Check-Out From Fsl</b></h2>
+                <h2><b>Check-Out From FSL</b></h2>
             </div>
 
             <form class="d-flex" role="search" action="{{ url_for('searchoutfsl') }}" method="post">
@@ -439,19 +122,7 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
 
-            <!-- Flash messages -->
-            <!-- {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <div class="alert-container">
-                        {% for category, message in messages %}
-                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %} -->
+            
 
             <div class="container" style="margin-top: 35px;">
 
@@ -463,66 +134,75 @@
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">FIR Number:</h4>
-                            <input type="text" class="barcode-generator" name="fir_number" placeholder="" value="{{ evidence.fir_number if evidence else '' }}" required>
+                            <input type="text" class="barcode-generator" name="fir_number" placeholder="" value="{{ evidence.case_number if evidence else '' }}" required>
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">Item Name:</h4>
-                            <input type="text" class="barcode-generator" name="item_name" placeholder="" value="{{ evidence.item_seized if evidence else '' }}" required>
+                            <input type="text" class="barcode-generator" name="item_name" placeholder="" value="{{ evidence.item_name if evidence else '' }}" required>
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">Collected By:</h4>
                             <input type="text" class="barcode-generator" name="collected_by" placeholder="" value="{{ evidence.collected_by if evidence else '' }}" required>
                         </div>
                         <div class="barcode-container">
-                            <h4 class="barcode-heading">Checkin Date:</h4>
-                            <input type="date" id="checkin_date" class="barcode-generator" name="checkin_date" placeholder="" value="{{ evidence.checkin_date if evidence else '' }}" required>
+                            <h4 class="barcode-heading">Check-Out Date:</h4>
+                            <input type="date" class="barcode-generator" name="checkout_date" id="checkout_date" required>
                         </div>
                         <div class="barcode-container">
-                            <h4 class="barcode-heading">Checkin Time:</h4>
-                            <input type="time" id="checkin_time" class="barcode-generator" name="checkin_time" placeholder="" value="{{ evidence.checkin_time if evidence else '' }}" required>
+                            <h4 class="barcode-heading">Check-Out Time:</h4>
+                            <input type="time" class="barcode-generator" name="checkout_time" id="checkout_time" required>
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">Remarks:</h4>
                             <input type="text" class="barcode-generator" name="remarks" placeholder="" value="{{ evidence.remarks if evidence else '' }}">
                         </div>
                         <div class="container" style="height: fit-content; margin-bottom: 50px;">
-                            <button type="submit" class="submit-button" style="height: 50px; width: 270px; background-color:rgb(255, 255, 255); color: black; border: 2px solid black;"><b>Check-In</b></button>
+                            <button type="submit" class="submit-button" style="height: 50px; width: 270px; background-color:rgb(255, 255, 255); color: black; border: 2px solid black;"><b>Check-Out</b></button>
                         </div>
                     </div>
                 </form>
 
             </div>
-            <div class="container" >
+            <div class="container">
                 <div class="text-center">
                     <div class="row">
                         <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; width: 210px; border: 2px solid black; background-color:white; border-radius: 10px;">
                             <form action="/fsltable">
-                                <button class="btn  " type="login" name="login" style="  width: 210px; text-align: center;"><b>Back</b></button>
+                                <button class="btn" type="submit" style="width: 210px; text-align: center;"><b>Back</b></button>
                             </form>
                         </div>
-                        <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; border: 2px solid black; width: 210px;background-color: white; border-radius: 10px;">
-                            <form action="/logout">
-                                <button class="btn " type="login" name="login" style=" width: 210px; text-align: center;"><b>Logout</b></button>
+                        <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; border: 2px solid black; background-color:white; border-radius: 10px;">
+                            <form action="/fsltable">
+                                <button class="btn" type="submit" style="width: 210px; text-align: center;"><b>Close</b></button>
                             </form>
                         </div>
-                         
                     </div>
-                    
                 </div>
-           
-        </div>
+            </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-24e1A5uF2t1f6x2X1S9FHZKX4+e1Tx8w77H6+1ZRPwW1k6vA9+o7HR+YzO/nMclT" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-GLhlTQTR7IhL1Z0V6e+Ejbk5fbElrZDJHc4SQq5kxfpF6gO2a0iHqgCwOMOT0CWT" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
+        document.addEventListener('DOMContentLoaded', function () {
             const now = new Date();
-            const dateString = now.toISOString().split('T')[0];
-            const timeString = now.toTimeString().split(' ')[0].substring(0, 5);
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const day = String(now.getDate()).padStart(2, '0');
+            const date = `${year}-${month}-${day}`;
+            const time = now.toTimeString().split(' ')[0].substring(0, 5); // HH:MM format
 
-            document.getElementById('checkin_date').value = dateString;
-            document.getElementById('checkin_time').value = timeString;
+            document.getElementById('checkout_date').value = date;
+            document.getElementById('checkout_time').value = time;
         });
+
+        // Auto-dismiss flash messages after 5 seconds
+        setTimeout(function () {
+            var alertElement = document.querySelector('.alert');
+            if (alertElement) {
+                var alertInstance = bootstrap.Alert.getOrCreateInstance(alertElement);
+                alertInstance.close();
+            }
+        }, 5000);
     </script>
 </body>
 

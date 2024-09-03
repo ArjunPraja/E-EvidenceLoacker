@@ -88,6 +88,29 @@
 </head>
 
 <body>
+
+     <!-- Flash messages -->
+     {% with messages = get_flashed_messages(with_categories=true) %}
+     {% if messages %}
+     <div class="flash-message d-flex justify-content-center align-items-center">
+         {% for category, message in messages %}
+         <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px;">
+             {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+         {% endfor %}
+     </div>
+     <script>
+         setTimeout(function() {
+             let alerts = document.querySelectorAll('.alert');
+             alerts.forEach(alert => {
+                 alert.classList.remove('show');
+                 alert.classList.add('fade');
+             });
+         }, 2000); // Hide alert after 2 seconds
+     </script>
+     {% endif %}
+     {% endwith %}
     <div class="container">
 
         <div class="container" style="background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);">
@@ -100,22 +123,7 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
 
-            <!-- Flash messages -->
-            <!-- {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <div class="alert-container">
-                        {% for category, message in messages %}
-                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %} -->
-
             <div class="container" style="margin-top: 35px;">
-
                 <form action="{{ url_for('checkin_fsl') }}" method="post">
                     <div class="button-container" style="background-color: rgb(203, 203, 203); border: 2px solid black; border-radius: 15px; padding-top: 35px; margin-top: 20px;">
                         <div class="barcode-container">
@@ -124,11 +132,11 @@
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">FIR Number:</h4>
-                            <input type="text" class="barcode-generator" name="fir_number" placeholder="" value="{{ evidence.fir_number if evidence else '' }}" required>
+                            <input type="text" class="barcode-generator" name="fir_number" placeholder="" value="{{ evidence.case_number if evidence else '' }}" required>
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">Item Name:</h4>
-                            <input type="text" class="barcode-generator" name="item_name" placeholder="" value="{{ evidence.item_seized if evidence else '' }}" required>
+                            <input type="text" class="barcode-generator" name="item_name" placeholder="" value="{{ evidence.item_name if evidence else '' }}" required>
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">Collected By:</h4>
@@ -151,9 +159,9 @@
                         </div>
                     </div>
                 </form>
-
             </div>
-            <div class="container" >
+
+            <div class="container">
                 <div class="text-center">
                     <div class="row">
                         <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; width: 210px; border: 2px solid black; background-color:white; border-radius: 10px;">
@@ -166,12 +174,9 @@
                                 <button class="btn " type="login" name="login" style=" width: 210px; text-align: center;"><b>Logout</b></button>
                             </form>
                         </div>
-                         
                     </div>
-                    
                 </div>
-           
-        </div>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-24e1A5uF2t1f6x2X1S9FHZKX4+e1Tx8w77H6+1ZRPwW1k6vA9+o7HR+YzO/nMclT" crossorigin="anonymous"></script>

@@ -76,15 +76,15 @@
 <body>
     <div class="container">
         <div class="container" style="background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38); ">
-            <div class="container" style="margin: 30px;">
-                <div class="button-container" style="background-color: rgb(203, 203, 203);">
+            <div class="container" style="margin: 80px;display: block; align-items:center;">
+                <div class="button-container" style="background-color: rgb(203, 203, 203); border: 2px solid rgb(203, 203, 203); border-radius: 20px;">
                     <div class="barcode-container">
                         <h4 class="barcode-heading">Barcode Number:</h4>
                         <p class="barcode-generator"><b>{{ evidence._id }}</b></p>
                     </div>
                     <div class="barcode-container">
                         <h4 class="barcode-heading">FIR Number:</h4>
-                        <p class="barcode-generator"><b>{{ evidence.fir_number }}</b></p>
+                        <p class="barcode-generator"><b>{{ evidence.case_number }}</b></p>
                     </div>
                     <div class="barcode-container">
                         <h4 class="barcode-heading">INSPECTOR:</h4>
@@ -96,24 +96,13 @@
                     </div>
                     <div class="barcode-container">
                         <h4 class="barcode-heading">Item Seized:</h4>
-                        <p class="barcode-generator"><b>{{ evidence.item_seized }}</b></p>
+                        <p class="barcode-generator"><b>{{ evidence.item_name}}</b></p>
                     </div>
                     <div class="barcode-container">
                         <h4 class="barcode-heading">Crime Place:</h4>
                         <p class="barcode-generator"><b>{{ evidence.crime_place }}</b></p>
                     </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Item Condition:</h4>
-                        <p class="barcode-generator"><b>{{ evidence.item_condition }}</b></p>
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Witness:</h4>
-                        <p class="barcode-generator"><b>{{ evidence.witness }}</b></p>
-                    </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Storage Location:</h4>
-                        <p class="barcode-generator"><b>{{ evidence.storage_location }}</b></p>
-                    </div>
+                     
                     <div class="barcode-container">
                         <h4 class="barcode-heading">IPC Section:</h4>
                         <p class="barcode-generator"><b>{{ evidence.ipc_section }}</b></p>
@@ -123,27 +112,27 @@
                         <h4 class="barcode-heading">Police Station:</h4>
                         <p class="barcode-generator"><b>{{ evidence.crime_place}}</b></p>
                     </div>
-                    <div class="barcode-container">
-                        <h4 class="barcode-heading">Location:</h4>
-                        <p class="barcode-generator"><b>{{ evidence.storage_location}}</b></p>
-                    </div>
+                    
                 </div>
             </div>
-            <div class="container" >
+            <div class="container">
                 <div class="text-center">
                     <div class="row">
-                        <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; width: 210px; border: 2px solid black; background-color:white; border-radius: 10px;">
+                        <div class="col"
+                            style="padding:5px;margin-left: 65px; margin-bottom: 90px; border: 2px solid black; background-color: rgb(201, 200, 200); border-radius: 10px;">
                             <form action="/globalsearch">
-                                <button class="btn  " type="button" name="back" style="width: 210px; text-align: center;"><b>Back</b></button>
+                                <button class="btn" type="submit" name="back"><b>Back</b></button>
                             </form>
                         </div>
-                        <div class="col" style="padding: 5px; margin-left: 10px; margin-right: 10px; border: 2px solid black; width: 210px;background-color: white; border-radius: 10px;">
-                            <form action="{{ url_for('logout') }}">
-                                <button class="btn " type="submit" name="logout" style="width: 210px; text-align: center;"><b>Logout</b></button>
+                        <div class="col"
+                            style=" padding: 5px; margin-left: 65px; margin-right: 90px; margin-bottom: 90px; border: 2px solid black; background-color: rgb(201, 200, 200); border-radius: 10px;">
+                            <form action="/logout">
+                                <button class="btn " type="submit" name="logout"><b>Logout</b></button>
                             </form>
                         </div>
                     </div>
                 </div>
+            
             </div>
         </div>
     </div>

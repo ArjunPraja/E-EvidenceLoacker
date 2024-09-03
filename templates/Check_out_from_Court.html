@@ -88,7 +88,31 @@
 </head>
 
 <body>
+
+     <!-- Flash messages -->
+     {% with messages = get_flashed_messages(with_categories=true) %}
+     {% if messages %}
+     <div class="flash-message d-flex justify-content-center align-items-center">
+         {% for category, message in messages %}
+         <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px;">
+             {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+         {% endfor %}
+     </div>
+     <script>
+         setTimeout(function() {
+             let alerts = document.querySelectorAll('.alert');
+             alerts.forEach(alert => {
+                 alert.classList.remove('show');
+                 alert.classList.add('fade');
+             });
+         }, 2000); // Hide alert after 2 seconds
+     </script>
+     {% endif %}
+     {% endwith %}
     <div class="container">
+
 
         <div class="container" style="background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);">
             <div class="container" style="background-color:rgb(201, 200, 200); height: auto; border: 2px solid black; border-radius: 20px; margin-top: 15px; margin-bottom: 20px;">
@@ -124,11 +148,11 @@
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">FIR Number:</h4>
-                            <input type="text" class="barcode-generator" name="fir_number" placeholder="" value="{{ evidence.fir_number if evidence else '' }}" required>
+                            <input type="text" class="barcode-generator" name="fir_number" placeholder="" value="{{ evidence.case_number if evidence else '' }}" required>
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">Item Name:</h4>
-                            <input type="text" class="barcode-generator" name="item_name" placeholder="" value="{{ evidence.item_seized if evidence else '' }}" required>
+                            <input type="text" class="barcode-generator" name="item_name" placeholder="" value="{{ evidence.item_name if evidence else '' }}" required>
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">Collected By:</h4>
@@ -140,11 +164,15 @@
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">Checkin Time:</h4>
-                            <input type="time" id="checkin_time" class="barcode-generator" name="checkin_time" placeholder="" value="{{ evidence.checkin_time if evidence else '' }}" required>
+                            <input type="time" id="checkin_time" class="barcode-generator" name="checkout_time" placeholder="" value="{{ evidence.checkin_time if evidence else '' }}" required>
                         </div>
                         <div class="barcode-container">
                             <h4 class="barcode-heading">Remarks:</h4>
                             <input type="text" class="barcode-generator" name="remarks" placeholder="" value="{{ evidence.remarks if evidence else '' }}">
+                        </div>
+                        <div class="barcode-container">
+                            <h4 class="barcode-heading">Disposal Date:</h4>
+                            <input type="date" id="DisposalDate" class="barcode-generator" name="checkout_date" placeholder="" value="{{ evidence.checkin_date if evidence else '' }}" >
                         </div>
                         <div class="container" style="height: fit-content; margin-bottom: 50px;">
                             <button type="submit" class="submit-button" style="height: 50px; width: 270px; background-color:rgb(255, 255, 255); color: black; border: 2px solid black;"><b>Check-In</b></button>

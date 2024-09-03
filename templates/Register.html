@@ -1,0 +1,150 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .registration-container {
+            background-color: #f8f9fa;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .registration-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-message" style="display: flex; justify-content: center; align-items: center; flex-direction: column; position: fixed; top: 10px; width: 100%; z-index: 1000;">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" style="max-width: 600px;" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    
+    <form action="/register" method="post">
+        <div class="container" style="background-color: rgb(201, 200, 200); height: auto; border: 2px solid black; border-radius: 20px; margin-top: 15px; margin-bottom: 20px; text-align: center;">
+            <h2><b>Register Station</b></h2>
+        </div>
+        <div class="container">
+            <div class="button-container" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; background-color: rgb(255, 255, 255); border: 2px solid white; border-radius: 20px;">
+                <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                    <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Station Name</h4>
+                    <input type="text" name="station_name" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" required>
+                </div>
+                
+                <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                    <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Staff Name</h4>
+                    <input type="text" name="staff_name" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" required>
+                </div>
+                
+                <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">                     <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">District Name</h4>
+                   <input type="text" name="district_name" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" required>
+               </div>
+                <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">                     <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Sub-District Name</h4>
+                   <input type="text" name="sub_district_name" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" required>
+               </div>
+                <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                    <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Contact No</h4>
+                    <input type="text" name="contact_no" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" required>
+                </div>
+                <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                    <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Station Location</h4>
+                    <input type="text" name="station_location" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" required>
+                </div>
+                <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                    <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Email</h4>
+                    <input type="text" name="email" class="barcode-generator" style="padding: 10px; background-color: white; color: #000000; border: 2px solid black; border-radius: 5px; cursor: pointer; margin: 5px; width: 210px;" placeholder="" required>
+                </div>
+                <div class="barcode-container" style="display: flex; align-items: center; margin: 5px;">
+                    <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Password</h4>
+                    <div class="input-group" style="width: 210px;">
+                        <input type="password" id="password" style="border: 2px solid #000000;" name="password" class="form-control" style="background-color: white;" required>
+                        <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;">
+                            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="barcode-container" style="display: flex; align-items: center; margin: 5px; border: #000000;">
+                    <h4 class="barcode-heading" style="margin-right: 10px; margin-left: 60px; padding-left: 10px; width: 210px;">Verify Password</h4>
+                    <div class="input-group" style="width: 220px;">
+                        <input type="password" style="border: 2px solid #000000;" id="verify_password" name="verify_password" class="form-control" style="background-color: white;" required>
+                        <span class="input-group-text" onclick="toggleVerifyPassword()" style="cursor: pointer;">
+                            <i class="bi bi-eye" id="toggleVerifyPasswordIcon"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="container" style="height: fit-content; margin-bottom: 20px; text-align: center; margin-top: 30px;">
+                <button type="submit" class="submit-button" style="height: 50px; min-width: 270px; width: 750px; color: black; border: 2px solid black; border-radius: 40px; background-color: rgb(201, 200, 200);"><b>Register</b></button>
+            </div>
+
+        </div>
+        <h6 style="display: flex ; justify-content: center; text-decoration: none;">Already Have an Account?  <a href="{{ url_for('login') }}"> Login</a></h6>
+    </form>
+    <br>
+    
+</div>
+
+</div>
+<!-- <h6>Already Have an Account? <a href="{{ url_for('login') }}">Login</a></h6> -->
+
+    
+<script>
+    function togglePassword() {
+        var passwordField = document.getElementById("password");
+        var toggleIcon = document.getElementById("togglePasswordIcon");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.classList.add("bi-eye-slash");
+            toggleIcon.classList.remove("bi-eye");
+        } else {
+            passwordField.type = "password";
+            toggleIcon.classList.add("bi-eye");
+            toggleIcon.classList.remove("bi-eye-slash");
+        }
+    }
+
+    function toggleVerifyPassword() {
+        var verifyPasswordField = document.getElementById("verify_password");
+        var toggleIcon = document.getElementById("toggleVerifyPasswordIcon");
+        if (verifyPasswordField.type === "password") {
+            verifyPasswordField.type = "text";
+            toggleIcon.classList.add("bi-eye-slash");
+            toggleIcon.classList.remove("bi-eye");
+        } else {
+            verifyPasswordField.type = "password";
+            toggleIcon.classList.add("bi-eye");
+            toggleIcon.classList.remove("bi-eye-slash");
+        }
+    }
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></script>
+</body>
+</html>
