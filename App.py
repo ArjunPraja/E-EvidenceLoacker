@@ -8,16 +8,10 @@ import uuid
 from io import BytesIO
 import base64
 from PIL import Image, ImageDraw, ImageFont
-
 import os
 from bson import ObjectId
-import uuid
-import qrcode
-from io import BytesIO
-from PIL import Image
-import base64
-# Create a Flask application
-
+from datetime import datetime
+import re
 
 
 
@@ -188,12 +182,43 @@ def home():
         return redirect(url_for('login'))
     return render_template('home.html')
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/warehousetable')
 def warehousetable():
     if 'email' not in session:
         flash('Please log in first.', 'danger')
         return redirect(url_for('login'))
     return render_template('warehousetable.html')
+
+
+
+ 
 
 @app.route('/adddetails', methods=['GET', 'POST'])
 def add_details():
@@ -212,6 +237,16 @@ def add_details():
         storage_location = request.form.get('storage_location')
         ipc_section = request.form.get('ipc_section')
         number_plate = request.form.get('number_plate', '')
+
+        # Handle image upload
+        image_file = request.files.get('image')
+        if image_file:
+            img = Image.open(image_file)
+            buffered = BytesIO()
+            img.save(buffered, format="PNG")
+            image_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
+        else:
+            image_str = None
 
         # Generate a Unique ID
         unique_id = str(uuid.uuid4())
@@ -267,7 +302,7 @@ def add_details():
         img.save(buffered, format="PNG")
         img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
-        # Save evidence data along with unique ID and QR code image (base64 encoded)
+        # Save evidence data along with unique ID, QR code image (base64 encoded), and optional image
         evidence_data = {
             'username': session['email'],  # Store email in evidence data
             'case_number': case_number,
@@ -280,7 +315,8 @@ def add_details():
             'ipc_section': ipc_section,
             'number_plate': number_plate,
             'unique_id': unique_id,
-            'qr_code': img_str  # Storing the QR code image as base64
+            'qr_code': img_str,  # Storing the QR code image as base64
+            'evidence_image': image_str  # Storing the uploaded image as base64
         }
 
         # Insert evidence data into the collection
@@ -295,6 +331,12 @@ def add_details():
         return redirect(url_for('add_details'))
 
     return render_template('addDetails.html')
+
+
+
+
+
+
 @app.route('/viewdetails')
 def view_details():
     if 'email' not in session:
@@ -322,6 +364,20 @@ def checkout():
 
     checkout_details = checkout_collection.find({'username': session['email']})
     return render_template('CheckOut.html', checkout_details=checkout_details)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -550,23 +606,6 @@ def checkout_fsl():
         return redirect(url_for('checkout_fsl'))
 
     return render_template('Check_out_from_FSL.html')
-
-@app.route('/searchinfsl', methods=['POST'])
-def searchinfsl():
-    qr_number = request.form.get('barcode_number')
-    evidence = None
-    
-    if qr_number:
-        evidence = evidence_collection.find_one({'unique_id': qr_number})
-        if evidence:
-            flash('Data Collected Successfully', 'success')
-        else:
-            flash('No data found for the given barcode number', 'danger')
-    else:
-        flash('Please enter a barcode number', 'warning')
-    
-    return render_template('Check_In_from_FSL.html', evidence=evidence)
-
 @app.route('/searchoutfsl', methods=['POST'])
 def searchoutfsl():
     qr_number = request.form.get('barcode_number')
@@ -619,6 +658,30 @@ def searchoutcourt():
 
 
 
+@app.route('/searchinfsl', methods=['POST'])
+def searchinfsl():
+    qr_number = request.form.get('barcode_number')
+    evidence = None
+
+    if not qr_number:
+        flash('Please enter a barcode number', 'warning')
+        return redirect(url_for('checkin_fsl'))
+
+    # Simple validation for barcode format
+    if not re.match(r'^[A-Za-z0-9_-]+$', qr_number):
+        flash('Invalid barcode format', 'danger')
+        return redirect(url_for('checkin_fsl'))
+
+    # Fetch evidence data from MongoDB
+    evidence = evidence_collection.find_one({'unique_id': qr_number})
+    
+    if evidence:
+        flash('Data Collected Successfully', 'success')
+    else:
+        flash('No data found for the given barcode number', 'danger')
+
+    return render_template('Check_In_from_FSL.html', evidence=evidence)
+
 @app.route('/checkin_fsl', methods=['GET', 'POST'])
 def checkin_fsl():
     if 'email' not in session:
@@ -626,14 +689,29 @@ def checkin_fsl():
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        barcode_number = request.form['barcode_number']
-        fir_number = request.form['fir_number']
-        item_name = request.form['item_name']
-        collected_by = request.form['collected_by']
-        checkin_date = request.form['checkin_date']
-        checkin_time = request.form['checkin_time']
-        remarks = request.form['remarks']
+        # Fetching and validating input data
+        barcode_number = request.form.get('barcode_number')
+        fir_number = request.form.get('fir_number')
+        item_name = request.form.get('item_name')
+        collected_by = request.form.get('collected_by')
+        checkin_date = request.form.get('checkin_date')
+        checkin_time = request.form.get('checkin_time')
+        remarks = request.form.get('remarks', '')  # Remarks are optional
 
+        # Input validation
+        if not all([barcode_number, fir_number, item_name, collected_by, checkin_date, checkin_time]):
+            flash('All fields except remarks are required.', 'warning')
+            return redirect(url_for('checkin_fsl'))
+
+        # Ensure date and time are in proper format
+        try:
+            datetime.strptime(checkin_date, '%Y-%m-%d')
+            datetime.strptime(checkin_time, '%H:%M')
+        except ValueError:
+            flash('Invalid date or time format', 'danger')
+            return redirect(url_for('checkin_fsl'))
+
+        # Prepare data for insertion
         checkin_data = {
             'username': session['email'],
             'barcode_number': barcode_number,
@@ -645,11 +723,16 @@ def checkin_fsl():
             'remarks': remarks
         }
 
-        checkin_collection.insert_one(checkin_data)
-        flash('Checked in successfully!', 'success')
-        return redirect(url_for('checkin_fsl'))
+        # Insert data into MongoDB
+        try:
+            checkin_collection.insert_one(checkin_data)
+            flash('Checked in successfully!', 'success')
+        except Exception as e:
+            flash(f'An error occurred while checking in: {str(e)}', 'danger')
 
-    return render_template('Check_In_from_FSL.html')
+        return redirect(url_for('checkin_fsl'))
+    evidence="No Evidence"
+    return render_template('Check_In_from_FSL.html',evidence=evidence)
 
 # Under Construction Route
 @app.route('/underconstruction')

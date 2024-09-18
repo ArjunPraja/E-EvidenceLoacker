@@ -231,3 +231,305 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>E-Evidence Locker</title>
+     Include Bootstrap CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background: linear-gradient(120deg, #FF8008, #FFFFFF, #046A38);
+        }
+
+        .header-container {
+            background-color: rgb(201, 200, 200);
+            height: auto;
+            border: 2px solid black;
+            border-radius: 20px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: rgb(203, 203, 203);
+            border: 2px solid black;
+            border-radius: 15px;
+            padding: 35px;
+            margin-top: 20px;
+        }
+
+        .evidence-image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .evidence-img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+
+        .barcode-container {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .barcode-heading {
+            margin-right: 10px;
+            width: 200px;
+        }
+
+        .barcode-generator {
+            padding: 10px;
+            background-color: white;
+            color: #000000;
+            border: 2px solid black;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .submit-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: rgb(255, 255, 255);
+            color: black;
+            border: 2px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .bottom-buttons {
+            padding: 5px;
+            border: 2px solid black;
+            background-color: rgb(201, 200, 200);
+            border-radius: 10px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+    </style>
+</head>
+
+<body> -->
+
+    <!-- Flash messages -->
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-message d-flex justify-content-center align-items-center">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px;">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        setTimeout(function () {
+            let alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+            });
+        }, 2000); // Hide alert after 2 seconds
+    </script>
+    {% endif %}
+    {% endwith %} -->
+
+
+
+
+    <!-- Flash messages -->
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-message d-flex justify-content-center align-items-center">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px;">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        setTimeout(function () {
+            let alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+            });
+        }, 2000); // Hide alert after 3 seconds
+    </script>
+    {% endif %}
+    {% endwith %}
+
+
+    <div class="container">
+        <div class="header-container">
+            <h2><b>Check-In From FSL</b></h2>
+        </div> -->
+
+        <!-- Search Form -->
+        <!-- <form class="d-flex mb-3" role="search" action="{{ url_for('searchinfsl') }}" method="post">
+            <input class="form-control me-2" type="search" name="barcode_number" placeholder="Search"
+                aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+        <div class="row"  style="display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(203, 203, 203);
+        border: 2px solid black;
+        border-radius: 50px;
+        ">
+            Form Column -->
+            <!-- <div class="col-md-4">
+                <form action="{{ url_for('checkin_fsl') }}" method="post" class="form-container">
+                    <div class="barcode-container">
+                        <label class="barcode-heading">Barcode Number:</label>
+                        <input type="text" class="barcode-generator" name="barcode_number" placeholder=""
+                            value="{{ evidence.unique_id if evidence else '' }}" required>
+                    </div>
+                    <div class="barcode-container">
+                        <label class="barcode-heading">FIR Number:</label>
+                        <input type="text" class="barcode-generator" name="fir_number" placeholder=""
+                            value="{{ evidence.case_number if evidence else '' }}" required>
+                    </div>
+                    <div class="barcode-container">
+                        <label class="barcode-heading">Item Name:</label>
+                        <input type="text" class="barcode-generator" name="item_name" placeholder=""
+                            value="{{ evidence.item_name if evidence else '' }}" required>
+                    </div>
+                    <div class="barcode-container">
+                        <label class="barcode-heading">Collected By:</label>
+                        <input type="text" class="barcode-generator" name="collected_by" placeholder=""
+                            value="{{ evidence.collected_by if evidence else '' }}" required>
+                    </div>
+                    <div class="barcode-container">
+                        <label class="barcode-heading">Checkin Date:</label>
+                        <input type="date" id="checkin_date" class="barcode-generator" name="checkin_date" placeholder=""
+                            value="{{ evidence.checkin_date if evidence else '' }}" required>
+                    </div>
+                    <div class="barcode-container">
+                        <label class="barcode-heading">Checkin Time:</label>
+                        <input type="time" id="checkin_time" class="barcode-generator" name="checkin_time" placeholder=""
+                            value="{{ evidence.checkin_time if evidence else '' }}" required>
+                    </div>
+                    <div class="barcode-container">
+                        <label class="barcode-heading">Remarks:</label>
+                        <input type="text" class="barcode-generator" name="remarks" placeholder=""
+                            value="{{ evidence.remarks if evidence else '' }}">
+                    </div>
+                    <button type="submit" class="submit-button"><b>Check-In</b></button>
+                </form>
+            </div>
+            <!-- Image Column -->
+            <!-- <div class="col-md-5">
+                <div class="evidence-image-container">
+                    {% if evidence.evidence_image %}
+                    <img src="data:image/png;base64,{{ evidence.evidence_image }}" class="evidence-img"
+                        alt="Evidence Image">
+                    {% else %}
+                    <p>No Image Available</p>
+                    {% endif %}
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Bottom Buttons -->
+        <!-- <div class="bottom-buttons">
+            <form action="/fsltable">
+                <button class="btn btn-secondary" type="submit"><b>Back</b></button>
+            </form>
+            <form action="/logout">
+                <button class="btn btn-secondary" type="submit"><b>Logout</b></button>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- Include Bootstrap JS -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-24e1A5uF2t1f6x2X1S9FHZKX4+e1Tx8w77H6+1ZRPwW1k6vA9+o7HR+YzO/nMclT"
+        crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const now = new Date();
+            const dateString = now.toISOString().split('T')[0];
+            const timeString = now.toTimeString().split(' ')[0].substring(0, 5);
+
+            document.getElementById('checkin_date').value = dateString;
+            document.getElementById('checkin_time').value = timeString;
+        });
+    </script>
+</body> -->
+
+<!-- </html>  --> 

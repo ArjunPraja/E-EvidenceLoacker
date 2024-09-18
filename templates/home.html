@@ -48,16 +48,26 @@
 </head>
 
 <body>
+    <!-- Flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <div class="flash-message" style="display: flex; justify-content: center; align-items: center;">
+    <div class="flash-message d-flex justify-content-center align-items-center">
         {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" style="display: flex; justify-content: center; max-width: 600px;" role="alert">
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px;">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% endfor %}
     </div>
+    <script>
+        setTimeout(function() {
+            let alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+            });
+        }, 2000); // Hide alert after 2 seconds
+    </script>
     {% endif %}
     {% endwith %}
 
