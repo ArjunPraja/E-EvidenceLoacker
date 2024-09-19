@@ -49,28 +49,28 @@
 
 <body>
     <!-- Flash messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="flash-message d-flex justify-content-center align-items-center">
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px;">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
+      <!-- Flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-message d-flex justify-content-center align-items-center" style="position: fixed; top: 20px; width: 100%; z-index: 1050; pointer-events: none;">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px; pointer-events: all;">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <script>
-        setTimeout(function() {
-            let alerts = document.querySelectorAll('.alert');
-            alerts.forEach(alert => {
-                alert.classList.remove('show');
-                alert.classList.add('fade');
-            });
-        }, 2000); // Hide alert after 2 seconds
-    </script>
-    {% endif %}
-    {% endwith %}
-
+    {% endfor %}
+</div>
+<script>
+    setTimeout(function () {
+        let alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            alert.classList.remove('show');
+            alert.classList.add('fade');
+        });
+    }, 3000); // Hide alert after 3 seconds
+</script>
+{% endif %}
+{% endwith %}
     <div class="container">
         <div class="bg-bac">
             <div class="text-center">

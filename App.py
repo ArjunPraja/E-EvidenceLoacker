@@ -495,8 +495,8 @@ def checkin_court():
         checkin_collection.insert_one(checkin_data)
         flash('Checked in successfully!', 'success')
         return redirect(url_for('checkin_court'))
-
-    return render_template('Check_In_from_Court.html')
+    evidence=""
+    return render_template('Check_In_from_Court.html',evidence=evidence)
 
 @app.route('/checkout_court', methods=['GET', 'POST'])
 def checkout_court():
@@ -527,8 +527,8 @@ def checkout_court():
         checkout_collection.insert_one(checkout_data)
         flash('Checked out successfully!', 'success')
         return redirect(url_for('checkout_court'))
-
-    return render_template('Check_out_from_Court.html')
+    evidence=""
+    return render_template('Check_out_from_Court.html',evidence=evidence)
 
 
 
@@ -604,12 +604,12 @@ def checkout_fsl():
             flash(f'An error occurred: {e}', 'danger')
 
         return redirect(url_for('checkout_fsl'))
-
-    return render_template('Check_out_from_FSL.html')
+    evidence=" "
+    return render_template('Check_out_from_FSL.html',evidence=evidence)
 @app.route('/searchoutfsl', methods=['POST'])
 def searchoutfsl():
     qr_number = request.form.get('barcode_number')
-    evidence = None
+    evidence = ""
     
     if qr_number:
         evidence = evidence_collection.find_one({'unique_id': qr_number})
@@ -620,6 +620,7 @@ def searchoutfsl():
     else:
         flash('Please enter a barcode number', 'warning')
     
+
     return render_template('Check_out_from_FSL.html', evidence=evidence)
 
 @app.route('/searchincourt', methods=['POST'])
@@ -731,7 +732,7 @@ def checkin_fsl():
             flash(f'An error occurred while checking in: {str(e)}', 'danger')
 
         return redirect(url_for('checkin_fsl'))
-    evidence="No Evidence"
+    evidence=""
     return render_template('Check_In_from_FSL.html',evidence=evidence)
 
 # Under Construction Route

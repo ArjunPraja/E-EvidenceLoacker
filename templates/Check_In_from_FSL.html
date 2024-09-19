@@ -57,12 +57,12 @@
         }
 
         .barcode-generator {
-            padding: 10px;
+            padding: 5px;
             background-color: white;
             color: #000000;
             border: 2px solid black;
             border-radius: 5px;
-            width: 100%;
+            width: 70%;
         }
 
         .submit-button {
@@ -78,9 +78,8 @@
 
         .bottom-buttons {
             padding: 5px;
-            border: 2px solid black;
-            background-color: rgb(201, 200, 200);
-            border-radius: 10px;
+           
+             border-radius: 10px;
             display: flex;
             justify-content: center;
             gap: 20px;
@@ -106,27 +105,27 @@
 
 <body>
     <!-- Flash messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="flash-message d-flex justify-content-center align-items-center">
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px;">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-message d-flex justify-content-center align-items-center" style="position: fixed; top: 20px; width: 100%; z-index: 1050; pointer-events: none;">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="max-width: 600px; pointer-events: all;">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <script>
-        setTimeout(function () {
-            let alerts = document.querySelectorAll('.alert');
-            alerts.forEach(alert => {
-                alert.classList.remove('show');
-                alert.classList.add('fade');
-            });
-        }, 3000); // Hide alert after 3 seconds
-    </script>
-    {% endif %}
-    {% endwith %}
+    {% endfor %}
+</div>
+<script>
+    setTimeout(function () {
+        let alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            alert.classList.remove('show');
+            alert.classList.add('fade');
+        });
+    }, 3000); // Hide alert after 3 seconds
+</script>
+{% endif %}
+{% endwith %}
 
     <div class="container">
         <div class="header-container">
@@ -140,8 +139,8 @@
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
 
-        <div class="row justify-content-center" style="display: flex;">
-            <div class="col-md-6 col-lg-4 row " style="flex: 2;">
+        <div class="row justify-content-center" style="display: flex; margin: 0;">
+            <div class="col-md-6 col-lg-4 " style="flex: 2;">
                 <form action="{{ url_for('checkin_fsl') }}" method="post" class="form-container">
                     <div class="barcode-container col">
                         <label class="barcode-heading">Barcode Number:</label>
@@ -181,25 +180,29 @@
                     <button type="submit" class="submit-button"><b>Check-In</b></button>
                 </form>
             </div>
-            <div class="col-md-6 col-lg-4" style="flex: 1;">
-                <div class="evidence-image-container">
+            <div class="col-md-6 col-lg-4 evidence-image-container" style=" margin-top: 20px; flex: 1; justify-content: center; text-align: center; border-radius: 15px; height: fit-content; width:fit-content; ">
+                
                     {% if evidence.evidence_image %}
                     <img src="data:image/png;base64,{{ evidence.evidence_image }}" class="evidence-img"
-                        alt="Evidence Image">
+                        alt="Evidence Image " style="margin: 0;padding: 0;">
                     {% else %}
-                    <p>No Image Available</p>
+                    <b>
+
+                        <p style="margin-top: 200px;">No Image Loded</p>
+                    </b>
                     {% endif %}
-                </div>
+                
             </div>
         </div>
 
         <!-- Bottom Buttons -->
-        <div class="bottom-buttons">
-            <form action="/fsltable">
-                <button class="btn btn-secondary" type="submit"><b>Back</b></button>
+        <div class="bottom-buttons row " style="display: flex; justify-content: center;">
+            <form action="/fsltable" class="col" style="text-align: center;">
+                <button class="btn btn-secondary" style="width: 500px; padding: 10px; border:2px solid #000000 ; border-radius: 8px; background-color: #FFFFFF; color: black;" type="submit"><b>Back</b></button>
             </form>
-            <form action="/logout">
-                <button class="btn btn-secondary" type="submit"><b>Logout</b></button>
+
+            <form action="/logout" class="col" style="text-align: center; ">
+                <button class="btn btn-secondary " style="width: 500px;padding: 10px; border:2px solid #000000 ; border-radius: 8px; background-color: #FFFFFF; color: #000000;" type="submit"><b>Logout</b></button>
             </form>
         </div>
     </div>
