@@ -99,14 +99,10 @@ To run this project locally, follow these steps:
 
 Contributions to improve the project are welcome! Please fork the repository, make your changes, and submit a pull request.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Contact
 
 For any inquiries or suggestions, feel free to contact:
-
 **Arjun Vishnubhai Prajapati**  
 Email: [prajapatiarjun2801@example.com](mailto:prajapatiarjun2801@example.com)  
 GitHub: [ArjunPraja](https://github.com/ArjunPraja)
