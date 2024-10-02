@@ -82,6 +82,8 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
         verify_password = request.form.get('verify_password')
+        email=''.join(email.split())
+        print(email)
 
         # Validate required fields
         if not all([district_name, sub_district_name, station_name, staff_name, contact_no, station_location, email, password, verify_password]):
@@ -374,30 +376,6 @@ def checkout():
 
 
 
-
-
-
-
-
-
-
-
-# Storage Checker Routes
-@app.route('/storagechecker')
-def storage_checker():
-    if 'username' not in session:
-        flash('Please log in first.', 'danger')
-        return redirect(url_for('login'))
-    return render_template('storageChecker.html')
-
-@app.route('/setstoragechecker')
-def set_storage_checker():
-    if 'username' not in session:
-        flash('Please log in first.', 'danger')
-        return redirect(url_for('login'))
-
-    user = checkout_collection.find({'username': session['username']})
-    return render_template('setStorageChecker.html', user=user)
 
 
 
