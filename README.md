@@ -108,9 +108,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 For any inquiries or suggestions, feel free to contact:
 
 **Arjun Vishnubhai Prajapati**  
-Email: [email@example.com](mailto:email@example.com)  
+Email: [prajapatiarjun2801@example.com](mailto:prajapatiarjun2801@example.com)  
 GitHub: [ArjunPraja](https://github.com/ArjunPraja)
 
----
 
-This structure should cover all the important details about your project. Feel free to edit the sections and details as needed!
