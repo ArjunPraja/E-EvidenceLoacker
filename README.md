@@ -59,31 +59,24 @@ To run this project locally, follow these steps:
    cd E-EvidenceLoacker
    ```
 
-3. **Create and activate a virtual environment** (optional but recommended):
+3. **Install the required dependencies**:
 
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate   # On Windows use `venv\Scripts\activate`
+   pip install -r Package Name
    ```
 
-4. **Install the required dependencies**:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-5. **Set up MongoDB**:
+4. **Set up MongoDB**:
 
    - Ensure MongoDB is installed and running on your machine.
    - Modify the connection string in the application to point to your MongoDB instance.
 
-6. **Run the application**:
+5. **Run the application**:
 
    ```bash
    flask run
    ```
 
-7. **Access the application**:
+6. **Access the application**:
 
    Open your browser and go to `http://localhost:5000`.
 
