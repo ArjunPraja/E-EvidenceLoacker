@@ -25,18 +25,6 @@ client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client['E_Evidence_Locker']
 users_collection = db['users']
 evidence_collection = db['evidence']
-# admins_collection = db['admins']
-global_search_collection = db['globalsearch']
-checkin_collection = db['Checkin']
-checkout_collection = db['Checkout']
-app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'Prajapati Arjun')  # Secret key for session management
-
-# Database Connection
-client = pymongo.MongoClient("mongodb://localhost:27017")
-db = client['E_Evidence_Locker']
-users_collection = db['users']
-evidence_collection = db['evidence']
 global_search_collection = db['globalsearch']
 checkin_collection = db['Checkin']
 checkout_collection = db['Checkout']
